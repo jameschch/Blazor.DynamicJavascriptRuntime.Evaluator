@@ -152,6 +152,32 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         }
 
         [Fact]
+        public async Task Given_a_dynamic_expression_And_a_value_is_returned_by_index_When_invoked_Then_should_execute_evaluation_And_return_value()
+        {
+            var runtime = new Mock<IJSRuntime>();
+            var script = "list[0]";
+            var expected = "abc123";
+            SetupReturnValue<string>(runtime, expected, script);
+
+            dynamic context = new EvalContext(runtime.Object);
+            (context as EvalContext).Expression = () => context.list[0];
+            var actual = await (context as EvalContext).InvokeAsync<string>();
+
+            Assert.Equal(expected, actual);
+            runtime.Verify(v => v.InvokeAsync<string>($"BlazorDynamicJavascriptRuntime.evaluate", script), Times.Once);
+
+            script = "list[\"index\"]";
+            SetupReturnValue<string>(runtime, expected, script);
+
+            context = new EvalContext(runtime.Object);
+            (context as EvalContext).Expression = () => context.list["index"];
+            actual = await (context as EvalContext).InvokeAsync<string>();
+
+            Assert.Equal(expected, actual);
+            runtime.Verify(v => v.InvokeAsync<string>($"BlazorDynamicJavascriptRuntime.evaluate", script), Times.Once);
+        }
+
+        [Fact]
         public void Given_a_dynamic_expression_And_a_date_When_invoked_Then_should_execute_evaluation()
         {
             var runtime = new Mock<IJSRuntime>();

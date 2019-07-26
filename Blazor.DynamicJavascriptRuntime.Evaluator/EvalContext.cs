@@ -80,16 +80,17 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         {
             if (!_hasInvoked)
             {
-                if (indexes[0] is EvalContext)
+                var isString = indexes[0] is string;
+                if (indexes[0] is EvalContext || indexes[0] is int || isString)
                 {
                     _script.Append("[");
-                    _script.Append(indexes[0].ToString());
+                    var value = isString ? Massage(indexes[0]) : indexes[0].ToString();
+                    _script.Append(value);
                     _script.Append("]");
                 }
                 else
                 {
-                    //todo: is this needed?
-                    Append(binder.CallInfo.ArgumentNames.Single());
+                    throw new Exception("Unexpected indexer type");
                 }
             }
 

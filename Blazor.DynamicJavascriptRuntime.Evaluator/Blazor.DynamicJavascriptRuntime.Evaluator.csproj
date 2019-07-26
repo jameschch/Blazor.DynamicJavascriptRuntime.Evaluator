@@ -5,8 +5,15 @@
     <Authors>jameschch</Authors>
     <Company></Company>
     <ApplicationIcon></ApplicationIcon>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.1-preview5.19227.9</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2-preview5.19227.9</Version>
+    <PackageLicenseUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.ico</PackageIconUrl>
+    <PackageId>DynamicJavascriptRuntime.Blazor.Evaluator</PackageId>
+    <Description>Execute dynamic object expressions as Javascript in Blazor</Description>
+    <PackageTags>blazor javascript dynamic JSRuntime JSInterop</PackageTags>
+    <Product>Blazor DynamicJavascriptRuntime Evaluator</Product>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +24,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.JSInterop" Version="3.0.0-preview5.19227.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Blazor.DynamicJavascriptRuntime.Evaluator.nuspec">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   
 
