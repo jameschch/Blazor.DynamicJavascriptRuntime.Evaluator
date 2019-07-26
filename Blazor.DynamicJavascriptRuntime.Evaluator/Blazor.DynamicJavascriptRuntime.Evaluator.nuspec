@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Blazor.DynamicJavascriptRuntime.Evaluator</id>
+    <id>DynamicJavascriptRuntime.Blazor.Evaluator</id>
     <version>1.0.0-preview5.19227.9</version>
-    <title>$title$</title>
+    <title>Blazor DynamicJavascriptRuntime Evaluator</title>
     <authors>jameschch</authors>
     <owners>jameschch</owners>
     <projectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</projectUrl>
