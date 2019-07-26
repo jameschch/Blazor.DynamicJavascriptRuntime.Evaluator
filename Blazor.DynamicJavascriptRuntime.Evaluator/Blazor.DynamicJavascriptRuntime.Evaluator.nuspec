@@ -2,12 +2,12 @@
 <package >
   <metadata>
     <id>DynamicJavascriptRuntime.Blazor.Evaluator</id>
-    <version>1.0.0-preview5.19227.9</version>
+    <version>1.0.1-preview5.19227.9</version>
     <title>Blazor DynamicJavascriptRuntime Evaluator</title>
     <authors>jameschch</authors>
     <owners>jameschch</owners>
     <projectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</projectUrl>
-    <license type="expression">Apache-2.0</license>
+    <licenseUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/blob/master/LICENSE</licenseUrl>
     <iconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Execute dynamic object expressions as Javascript in Blazor</description>
