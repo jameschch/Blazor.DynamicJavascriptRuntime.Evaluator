@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.DynamicJavascriptRuntime.Evaluator", "Blazor.DynamicJavascriptRuntime.Evaluator\Blazor.DynamicJavascriptRuntime.Evaluator.csproj", "{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.DynamicJavascriptRuntime.Evaluator.Tests", "Blazor.DynamicJavascriptRuntime.Evaluator.Tests\Blazor.DynamicJavascriptRuntime.Evaluator.Tests.csproj", "{87A44053-DCF8-4F05-8377-DD000A6DD80E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B15E7B0F-F30D-47B4-BCA7-691510AA33BD}
+	EndGlobalSection
+EndGlobal

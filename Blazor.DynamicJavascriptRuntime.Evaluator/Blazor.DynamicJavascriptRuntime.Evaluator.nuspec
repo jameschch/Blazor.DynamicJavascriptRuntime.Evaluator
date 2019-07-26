@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Blazor.DynamicJavascriptRuntime.Evaluator</id>
+    <version>1.0.0-preview5.19227.9</version>
+    <title>$title$</title>
+    <authors>jameschch</authors>
+    <owners>jameschch</owners>
+    <projectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</projectUrl>
+    <license type="expression">Apache-2.0</license>
+    <iconUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/Blazor.DynamicJavascriptRuntime.Evaluator/icon.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Execute dynamic object expressions as Javascript in Blazor</description>
+    <releaseNotes>Targeting Microsoft.JSInterop 3.0.0-preview5.19227.9</releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>blazor javascript dynamic JSRuntime JSInterop</tags>
+    <dependencies>
+      <dependency id="Microsoft.JSInterop" version="3.0.0-preview5.19227.9" />
+    </dependencies>
+  </metadata>
+</package>
