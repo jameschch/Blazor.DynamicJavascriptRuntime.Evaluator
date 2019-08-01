@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;netcoreapp2.2</TargetFrameworks>
     <Authors>jameschch</Authors>
     <Company></Company>
     <ApplicationIcon></ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2-preview5.19227.9</Version>
+    <Version>1.0.4-preview7.19362.4</Version>
     <PackageLicenseUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.ico</PackageIconUrl>
@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.JSInterop" Version="3.0.0-preview5.19227.9" />
+    <PackageReference Include="Microsoft.JSInterop" Version="3.0.0-preview7.19362.4" />
   </ItemGroup>
 
   <ItemGroup>

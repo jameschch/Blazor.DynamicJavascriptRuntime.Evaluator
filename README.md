@@ -46,6 +46,17 @@ using (dynamic context = new EvalContext(JSRuntimeInstance))
 }
 ```
 
+The dynamic expression is eagerly evaluated. This means floating point arithmetic will not be completely broken (it won't run in Javascript):
+
+```csharp
+using (dynamic context = new EvalContext(JSRuntimeInstance))
+{
+	(context as EvalContext).Expression = () => context.sum = 0.1 + 0.2 * 0.5 / 0.5;
+	//sum = 0.3;
+	//result in Javascript is 0.30000000000000004
+}
+```
+
 Don't forget to put the script include in your index.html:
 
 ```html

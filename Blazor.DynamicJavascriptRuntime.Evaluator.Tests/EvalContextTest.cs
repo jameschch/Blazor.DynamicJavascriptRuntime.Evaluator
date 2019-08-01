@@ -69,20 +69,17 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         }
 
         [Fact]
-        public void Given_a_dynamic_expression_And_a_function_is_called_And_context_is_reused_When_invoked_Then_should_throw_exception()
+        public void Given_a_dynamic_expression_And_a_function_is_called_And_context_is_reused_When_invoked_Then_should_not_throw_exception()
         {
-
-            Assert.Throws<Exception>(() =>
+            var runtime = new Mock<IJSRuntime>();
+            using (dynamic context = new EvalContext(runtime.Object))
             {
-                var runtime = new Mock<IJSRuntime>();
-                using (dynamic context = new EvalContext(runtime.Object))
-                {
-                    dynamic arg = new EvalContext(runtime.Object);
-                    dynamic arg2 = new EvalContext(runtime.Object);
-                    dynamic arg3 = new EvalContext(runtime.Object);
-                    (context as EvalContext).Expression = () => context.Do(arg.document, arg2.@this); context.After(arg3.that);
-                }
-            });
+                dynamic arg = new EvalContext(runtime.Object);
+                dynamic arg2 = new EvalContext(runtime.Object);
+                dynamic arg3 = new EvalContext(runtime.Object);
+                (context as EvalContext).Expression = () => context.Do(arg.document, arg2.@this); context.After(arg3.that);
+            }
+            //todo: prevent bad syntax
         }
 
         [Fact]
@@ -213,6 +210,70 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
             Verify(runtime, "sum = 2");
         }
 
+        [Fact]
+        public void Given_a_dynamic_expression_And_floating_point_sum_When_invoked_Then_should_derive_result_in_csharp_And_execute_evaluation()
+        {
+            var runtime = new Mock<IJSRuntime>();
+            using (dynamic context = new EvalContext(runtime.Object))
+            {
+                dynamic arg = new EvalContext(runtime.Object);
+                (context as EvalContext).Expression = () => context.sum = 0.1 + 0.2 * 0.5 / 0.5;
+            }
+            Verify(runtime, "sum = 0.3");
+        }
+
+        [Fact]
+        public void Given_a_dynamic_expression_And_decimal_sum_When_invoked_Then_should_derive_result_in_csharp_And_execute_evaluation()
+        {
+            var runtime = new Mock<IJSRuntime>();
+            using (dynamic context = new EvalContext(runtime.Object))
+            {
+                dynamic arg = new EvalContext(runtime.Object);
+                (context as EvalContext).Expression = () => context.sum = 0.1d + 0.2d * 0.5d / 0.5d;
+            }
+            Verify(runtime, "sum = 0.3");
+        }
+
+        [Fact]
+        public async Task Given_multiple_dynamic_expressions_When_invoked_And_reset_And_invoked_Then_should_execute_mutliple_evaluations()
+        {
+            var runtime = new Mock<IJSRuntime>();
+            var expected = "value";
+            SetupReturnValue<string>(runtime, expected, "instance.property");
+            using (dynamic context = new EvalContext(runtime.Object))
+            {
+                var evalContext = (context as EvalContext);
+                dynamic arg = new EvalContext(runtime.Object);
+                evalContext.Expression = () => context.var_instance = arg.new_object();
+                await evalContext.InvokeAsync<dynamic>();
+                evalContext.Reset();
+                evalContext.Expression = () => context.instance.property = expected;
+                await evalContext.InvokeAsync<dynamic>();
+                evalContext.Reset();
+                arg = new EvalContext(runtime.Object);
+                evalContext.Expression = () => context.instance.property;
+                var actual = await evalContext.InvokeAsync<string>();
+                Assert.Equal(expected, actual);
+            }
+
+            Verify(runtime, "var instance = new object()");
+            Verify(runtime, "instance.property = \"value\"");
+            Verify<string>(runtime, "instance.property");
+        }
+
+
+        [Fact]
+        public void Given_a_dynamic_expression_And_a_function_chain_is_called_When_invoked_Then_should_execute_evaluation()
+        {
+            var runtime = new Mock<IJSRuntime>();
+            using (dynamic context = new EvalContext(runtime.Object))
+            {
+                (context as EvalContext).Expression = () => context.jQuery("body").css("overflow-y", "hidden");
+            }
+
+            Verify(runtime, "jQuery(\"body\").css(\"overflow-y\", \"hidden\")");
+        }
+
         private static void SetupReturnValue<T>(Mock<IJSRuntime> runtime, string expected, string script)
         {
             runtime.Setup(v => v.InvokeAsync<T>($"BlazorDynamicJavascriptRuntime.evaluate", script))
@@ -221,7 +282,12 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
 
         private void Verify(Mock<IJSRuntime> runtime, string script)
         {
-            runtime.Verify(v => v.InvokeAsync<dynamic>($"BlazorDynamicJavascriptRuntime.evaluate", script), Times.Once);
+            runtime.Verify<dynamic>(v => v.InvokeAsync<dynamic>($"BlazorDynamicJavascriptRuntime.evaluate", script), Times.Once);
+        }
+
+        private void Verify<T>(Mock<IJSRuntime> runtime, string script)
+        {
+            runtime.Verify(v => v.InvokeAsync<T>($"BlazorDynamicJavascriptRuntime.evaluate", script), Times.Once);
         }
 
     }

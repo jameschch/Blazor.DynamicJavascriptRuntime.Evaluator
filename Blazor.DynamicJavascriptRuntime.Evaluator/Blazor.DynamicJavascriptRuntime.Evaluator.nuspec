@@ -1,23 +1,30 @@
-<?xml version="1.0"?>
-<package >
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>DynamicJavascriptRuntime.Blazor.Evaluator</id>
-    <version>1.0.3-preview5.19227.9</version>
+    <version>1.0.4-preview7.19362.4</version>
     <title>Blazor DynamicJavascriptRuntime Evaluator</title>
     <authors>jameschch</authors>
     <owners>jameschch</owners>
-    <projectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</projectUrl>
-    <licenseUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/blob/master/LICENSE</licenseUrl>
-    <iconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.ico</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.ico</iconUrl>
     <description>Execute dynamic object expressions as Javascript in Blazor</description>
     <releaseNotes>Targeting Microsoft.JSInterop 3.0.0-preview5.19227.9</releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>blazor javascript dynamic JSRuntime JSInterop</tags>
     <dependencies>
+      <group targetFramework=".NETCoreApp2.2">
+        <dependency id="Microsoft.JSInterop" version="3.0.0-preview7.19362.4" exclude="Build,Analyzers" />
+      </group>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="Microsoft.JSInterop" version="3.0.0-preview5.19227.9" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.JSInterop" version="3.0.0-preview7.19362.4" exclude="Build,Analyzers" />
       </group>
     </dependencies>
+    <contentFiles>
+      <files include="any/netcoreapp2.2/dist/_content/BlazorDynamicJavascriptRuntime.js" buildAction="Content" copyToOutput="true" />
+      <files include="any/netstandard2.0/dist/_content/BlazorDynamicJavascriptRuntime.js" buildAction="Content" copyToOutput="true" />
+    </contentFiles>
   </metadata>
 </package>

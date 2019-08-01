@@ -16,7 +16,6 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         bool _hasInvoked;
         IJSRuntime _runtime;
         private string _escaped;
-        private int _functionInvocationCount;
 
         public Func<dynamic> Expression { get; set; }
 
@@ -112,11 +111,6 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         {
             if (!_hasInvoked)
             {
-                if (_functionInvocationCount > 0)
-                {
-                    throw new Exception("Only one function invocation is currently supported in a single expression.");
-                }
-                _functionInvocationCount++;
                 if (_script.Length > 0)
                 {
                     _script.Append(".");
@@ -209,6 +203,17 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
                 Build();
                 Task.Run(async () => await InvokeAsync<dynamic>(_escaped));
             }
+        }
+
+        /// <summary>
+        /// Resets the context allowing for multiple invocations on a single instance.
+        /// </summary>
+        public void Reset()
+        {
+            Expression = null;
+            _script.Clear();
+            _hasInvoked = false;
+            _escaped = null;
         }
 
         private void Build()

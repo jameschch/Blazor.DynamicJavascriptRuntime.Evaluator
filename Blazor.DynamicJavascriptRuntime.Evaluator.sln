@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.DynamicJavascriptRuntime.Evaluator", "Blazor.DynamicJavascriptRuntime.Evaluator\Blazor.DynamicJavascriptRuntime.Evaluator.csproj", "{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.DynamicJavascriptRuntime.Evaluator", "Blazor.DynamicJavascriptRuntime.Evaluator\Blazor.DynamicJavascriptRuntime.Evaluator.csproj", "{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.DynamicJavascriptRuntime.Evaluator.Tests", "Blazor.DynamicJavascriptRuntime.Evaluator.Tests\Blazor.DynamicJavascriptRuntime.Evaluator.Tests.csproj", "{87A44053-DCF8-4F05-8377-DD000A6DD80E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.DynamicJavascriptRuntime.Evaluator.Tests", "Blazor.DynamicJavascriptRuntime.Evaluator.Tests\Blazor.DynamicJavascriptRuntime.Evaluator.Tests.csproj", "{87A44053-DCF8-4F05-8377-DD000A6DD80E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9223D055-9A13-40ED-82E3-4535AE43D28F}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
