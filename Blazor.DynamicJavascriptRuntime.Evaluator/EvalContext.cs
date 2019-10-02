@@ -12,9 +12,9 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
     public class EvalContext : DynamicObject, IDisposable, IEvalContext
     {
 
-        StringBuilder _script;
-        bool _hasInvoked;
-        IJSRuntime _runtime;
+        private StringBuilder _script;
+        private bool _hasInvoked;
+        private IJSRuntime _runtime;
         private string _escaped;
 
         public Func<dynamic> Expression { get; set; }
@@ -193,6 +193,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
 #if DEBUG
             Debug.WriteLine("BDJR: " + script);
 #endif
+            //todo: do not use extension method
             return await _runtime.InvokeAsync<T>("BlazorDynamicJavascriptRuntime.evaluate", script);
         }
 

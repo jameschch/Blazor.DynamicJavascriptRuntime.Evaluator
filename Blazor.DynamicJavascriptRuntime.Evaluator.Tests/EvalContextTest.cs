@@ -1,6 +1,7 @@
 using Microsoft.JSInterop;
 using Moq;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,7 +14,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 (context as EvalContext).Expression = () => context.Chart.defaults.global.animation.duration = 0;
@@ -30,7 +31,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_arguments_are_supplied_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 dynamic arg = new EvalContext(runtime.Object);
@@ -44,7 +45,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_a_function_is_called_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 dynamic arg = new EvalContext(runtime.Object);
@@ -57,7 +58,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
                 dynamic arg = new EvalContext(runtime.Object);
                 (context as EvalContext).Expression = () => context.Do(arg.stuff);
             }
-            Verify(runtime, "Do(stuff)");
+            Verify(runtime, "Do(stuff)", 2);
 
             using (dynamic context = new EvalContext(runtime.Object))
             {
@@ -65,13 +66,13 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
                 dynamic arg2 = new EvalContext(runtime.Object);
                 (context as EvalContext).Expression = () => context.Do("document", arg2.@this);
             }
-            Verify(runtime, "Do(\"document\", this)");
+            Verify(runtime, "Do(\"document\", this)", 3);
         }
 
         [Fact]
         public void Given_a_dynamic_expression_And_a_function_is_called_And_context_is_reused_When_invoked_Then_should_not_throw_exception()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 dynamic arg = new EvalContext(runtime.Object);
@@ -85,7 +86,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_a_string_indexer_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 (context as EvalContext).Expression = () => context.person["firstname"] = "Joe";
@@ -96,7 +97,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_a_call_to_window_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 (context as EvalContext).Expression = () => context.window.location = "www.be-evil\'\".com";
@@ -107,7 +108,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_a_declaration_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 dynamic arg = new EvalContext(runtime.Object);
@@ -119,7 +120,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public async Task Given_a_string_of_javascript_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             var expected = "expected";
             var script = "return " + expected;
             SetupReturnValue<dynamic>(runtime, expected, script);
@@ -135,7 +136,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public async Task Given_a_dynamic_expression_And_a_value_is_returned_When_invoked_Then_should_execute_evaluation_And_return_value()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             var expected = "abc123";
             var script = "document.cookie";
             SetupReturnValue<string>(runtime, expected, script);
@@ -151,7 +152,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public async Task Given_a_dynamic_expression_And_a_value_is_returned_by_index_When_invoked_Then_should_execute_evaluation_And_return_value()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             var script = "list[0]";
             var expected = "abc123";
             SetupReturnValue<string>(runtime, expected, script);
@@ -177,7 +178,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_a_date_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 dynamic arg = new EvalContext(runtime.Object);
@@ -189,7 +190,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_a_null_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 dynamic arg = new EvalContext(runtime.Object);
@@ -201,7 +202,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_operators_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 dynamic arg = new EvalContext(runtime.Object);
@@ -213,7 +214,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_floating_point_sum_When_invoked_Then_should_derive_result_in_csharp_And_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 dynamic arg = new EvalContext(runtime.Object);
@@ -225,7 +226,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_decimal_sum_When_invoked_Then_should_derive_result_in_csharp_And_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 dynamic arg = new EvalContext(runtime.Object);
@@ -237,7 +238,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public async Task Given_multiple_dynamic_expressions_When_invoked_And_reset_And_invoked_Then_should_execute_mutliple_evaluations()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             var expected = "value";
             SetupReturnValue<string>(runtime, expected, "instance.property");
             using (dynamic context = new EvalContext(runtime.Object))
@@ -265,7 +266,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         [Fact]
         public void Given_a_dynamic_expression_And_a_function_chain_is_called_When_invoked_Then_should_execute_evaluation()
         {
-            var runtime = new Mock<IJSRuntime>();
+            var runtime = new Mock<Wrapper>();
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 (context as EvalContext).Expression = () => context.jQuery("body").css("overflow-y", "hidden");
@@ -274,20 +275,37 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
             Verify(runtime, "jQuery(\"body\").css(\"overflow-y\", \"hidden\")");
         }
 
-        private static void SetupReturnValue<T>(Mock<IJSRuntime> runtime, string expected, string script)
+        private static void SetupReturnValue<T>(Mock<Wrapper> runtime, string expected, string script)
         {
             runtime.Setup(v => v.InvokeAsync<T>($"BlazorDynamicJavascriptRuntime.evaluate", script))
-                .Returns(Task.FromResult((T)Convert.ChangeType(expected, typeof(T))));
+                .Returns(new ValueTask<T>(Task.FromResult((T)Convert.ChangeType(expected, typeof(T)))));
         }
 
-        private void Verify(Mock<IJSRuntime> runtime, string script)
+        private void Verify(Mock<Wrapper> runtime, string script, int expectedInvocations = 1)
         {
-            runtime.Verify<dynamic>(v => v.InvokeAsync<dynamic>($"BlazorDynamicJavascriptRuntime.evaluate", script), Times.Once);
+            SpinWait.SpinUntil(() => runtime.Invocations.Count == expectedInvocations, TimeSpan.FromSeconds(1));
+            runtime.Verify(v => v.InvokeAsync<dynamic>($"BlazorDynamicJavascriptRuntime.evaluate", script), Times.Once);
         }
 
-        private void Verify<T>(Mock<IJSRuntime> runtime, string script)
+        private void Verify<T>(Mock<Wrapper> runtime, string script, int expectedInvocations = 1)
         {
+            SpinWait.SpinUntil(() => runtime.Invocations.Count == expectedInvocations, TimeSpan.FromSeconds(1));
             runtime.Verify(v => v.InvokeAsync<T>($"BlazorDynamicJavascriptRuntime.evaluate", script), Times.Once);
+        }
+
+
+        public class Wrapper : IJSRuntime
+        {
+
+            public virtual ValueTask<TValue> InvokeAsync<TValue>(string identifier, params object[] args)
+            {
+                throw new NotImplementedException();
+            }
+
+            public ValueTask<TValue> InvokeAsync<TValue>(string identifier, CancellationToken cancellationToken, object[] args)
+            {
+                throw new NotImplementedException();
+            }
         }
 
     }

@@ -1,19 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp2.2</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
     <Authors>jameschch</Authors>
     <Company></Company>
     <ApplicationIcon></ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.4-preview7.19362.4</Version>
-    <PackageLicenseUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/blob/master/LICENSE</PackageLicenseUrl>
+    <Version>1.0.5</Version>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.ico</PackageIconUrl>
     <PackageId>DynamicJavascriptRuntime.Blazor.Evaluator</PackageId>
     <Description>Execute dynamic object expressions as Javascript in Blazor</Description>
     <PackageTags>blazor javascript dynamic JSRuntime JSInterop</PackageTags>
     <Product>Blazor DynamicJavascriptRuntime Evaluator</Product>
+    <PackageLicenseExpression></PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.JSInterop" Version="3.0.0-preview7.19362.4" />
+    <PackageReference Include="Microsoft.JSInterop" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
