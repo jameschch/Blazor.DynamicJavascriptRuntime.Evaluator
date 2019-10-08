@@ -57,10 +57,4 @@ using (dynamic context = new EvalContext(JSRuntimeInstance))
 }
 ```
 
-Don't forget to put the script include in your index.html:
-
-```html
-<script src="_content/BlazorDynamicJavascriptRuntime.js"></script>
-```
-
 The execution of Javascript is performed with the eval() function. You have been warned (and should probably know better).

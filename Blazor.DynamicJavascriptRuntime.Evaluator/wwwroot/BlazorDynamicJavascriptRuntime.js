@@ -1,7 +1,7 @@
 ﻿window.BlazorDynamicJavascriptRuntime = {
 
     evaluate: function (script) {
-        eval(script);
+        return eval(script);
     }
 
 };

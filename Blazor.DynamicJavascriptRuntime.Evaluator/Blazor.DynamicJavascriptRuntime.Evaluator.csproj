@@ -1,13 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <RazorLangVersion>3.0</RazorLangVersion>
     <Authors>jameschch</Authors>
     <Company></Company>
     <ApplicationIcon></ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.5</Version>
-    <PackageLicenseUrl></PackageLicenseUrl>
+    <Version>1.0.6</Version>
+    <PackageLicenseUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.ico</PackageIconUrl>
     <PackageId>DynamicJavascriptRuntime.Blazor.Evaluator</PackageId>
@@ -15,23 +16,15 @@
     <PackageTags>blazor javascript dynamic JSRuntime JSInterop</PackageTags>
     <Product>Blazor DynamicJavascriptRuntime Evaluator</Product>
     <PackageLicenseExpression></PackageLicenseExpression>
+    <AssemblyVersion>1.0.6.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="dist\_content\BlazorDynamicJavascriptRuntime.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <EmbeddedResource Include="wwwroot\**\*.js" LogicalName="blazor:js:%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.JSInterop" Version="3.0.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Blazor.DynamicJavascriptRuntime.Evaluator.nuspec">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  
 
 </Project>

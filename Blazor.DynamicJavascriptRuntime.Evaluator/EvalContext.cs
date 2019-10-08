@@ -172,7 +172,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         /// </summary>
         /// <typeparam name="T">The return type</typeparam>
         /// <returns>The value returned from Javascript</returns>
-        public async virtual Task<T> InvokeAsync<T>()
+        public async virtual ValueTask<T> InvokeAsync<T>()
         {
             if (!_hasInvoked)
             {
@@ -187,14 +187,13 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         /// <typeparam name="T">The return type</typeparam>
         /// <param name="script">A string of Javascript</param>
         /// <returns></returns>
-        public async virtual Task<T> InvokeAsync<T>(string script)
+        public async virtual ValueTask<T> InvokeAsync<T>(string script)
         {
             _hasInvoked = true;
 #if DEBUG
             Debug.WriteLine("BDJR: " + script);
 #endif
-            //todo: do not use extension method
-            return await _runtime.InvokeAsync<T>("BlazorDynamicJavascriptRuntime.evaluate", script);
+            return await _runtime.InvokeAsync<T>("BlazorDynamicJavascriptRuntime.evaluate", new object[] { script });
         }
 
         public void Dispose()

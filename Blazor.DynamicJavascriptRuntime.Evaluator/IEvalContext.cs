@@ -10,7 +10,8 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         System.Func<dynamic> Expression { get; set; }
 
         void Dispose();
-        Task<T> InvokeAsync<T>();
+        ValueTask<T> InvokeAsync<T>();
+        ValueTask<T> InvokeAsync<T>(string script);
         string ToString();
         bool TryCreateInstance(CreateInstanceBinder binder, object[] args, out object result);
         bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result);
