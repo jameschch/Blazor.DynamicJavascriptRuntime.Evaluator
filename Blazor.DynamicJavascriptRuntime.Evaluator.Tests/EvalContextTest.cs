@@ -116,6 +116,22 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
             Verify(runtime, "var instance = new object()");
         }
 
+        [Theory]
+        [InlineData("__", false, "var _instance = new object()")]
+        [InlineData("__", true, "var___instance = new__object()")]
+        public void Given_a_dynamic_expression_And_settings_Then_should_execute_evaluation(string replacing, bool disabled, string expected)
+        {
+            var runtime = new Mock<IJSRuntime>();
+            var settings = new EvalContextSettings { SpaceCharacterPlaceholder = replacing, DisableSpaceCharacterPlaceholderReplacement = disabled };
+            using (dynamic context = new EvalContext(runtime.Object, settings))
+            {
+                dynamic arg = new EvalContext(runtime.Object, settings);
+                //alt+166
+                (context as EvalContext).Expression = () => context.var___instance = arg.new__object();
+            }
+            Verify(runtime, expected);
+        }
+
         [Fact]
         public async Task Given_a_string_of_javascript_When_invoked_Then_should_execute_evaluation()
         {

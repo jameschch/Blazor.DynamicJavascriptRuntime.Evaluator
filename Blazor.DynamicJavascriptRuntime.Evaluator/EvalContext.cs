@@ -15,6 +15,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         private StringBuilder _script;
         private bool _hasInvoked;
         private IJSRuntime _runtime;
+        private readonly EvalContextSettings _settings;
         private string _escaped;
 
         public Func<dynamic> Expression { get; set; }
@@ -22,6 +23,14 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         public EvalContext(IJSRuntime runtime)
         {
             _runtime = runtime;
+            _script = new StringBuilder();
+            _settings = new EvalContextSettings();
+        }
+
+        public EvalContext(IJSRuntime runtime, EvalContextSettings settings)
+        {
+            _runtime = runtime;
+            _settings = settings;
             _script = new StringBuilder();
         }
 
@@ -192,7 +201,13 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
             _hasInvoked = true;
 #if DEBUG
             Debug.WriteLine("BDJR: " + script);
+#else
+            if (_settings.EnableDebugLogging)
+            {
+                Debug.WriteLine("BDJR: " + script);
+            }
 #endif
+
             return await _runtime.InvokeAsync<T>("BlazorDynamicJavascriptRuntime.evaluate", new object[] { script });
         }
 
@@ -220,7 +235,8 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         {
             Expression?.Invoke();
             _hasInvoked = true;
-            _escaped = _script.ToString().Replace('_', ' ');
+            _escaped = _settings.DisableSpaceCharacterPlaceholderReplacement ? _script.ToString() : _script.ToString().Replace(_settings.SpaceCharacterPlaceholder, " ");
+
         }
 
     }
