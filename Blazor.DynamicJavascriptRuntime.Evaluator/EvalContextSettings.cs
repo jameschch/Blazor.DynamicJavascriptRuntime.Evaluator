@@ -29,5 +29,10 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         /// </summary>
         public JsonSerializerOptions JsonSerializerOptions { get; set; }
 
+        /// <summary>
+        /// Specified types will be serialized into Javascript objects
+        /// </summary>
+        public IList<Type> SerializableTypes { get; } = new List<Type>();
+
     }
 }

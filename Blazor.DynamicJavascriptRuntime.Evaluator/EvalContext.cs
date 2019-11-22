@@ -161,11 +161,11 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
             {
                 return "new Date(\u0022" + ((DateTime)value).ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz") + "\u0022)";
             }
-            else if (IsAnonymousType(value.GetType()))
+            else if (IsAnonymousType(value.GetType()) || _settings.SerializableTypes.Contains(value.GetType()))
             {
                 return JsonSerializer.Serialize(value, _settings.JsonSerializerOptions);
             }
-            //todo: Allow user defined serializable types
+            //todo: support enums
             return value;
         }
 

@@ -40,7 +40,25 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             }, TimeSpan.FromSeconds(2));
 
             Assert.Equal("{\"Property\":\"Value\",\"Field\":123,\"child\":{\"Member\":\"2001-01-01T00:00:00\"}}", actual);
-
         }
+
+        [Fact]
+        public void Given_a_blazor_app_When_passing_argument_And_specifying_as_serializable_type_Then_should_serialize_and_execute()
+        {
+            Tests.Client.Program.Main(null);
+
+            _driver.Navigate().GoToUrl("http://localhost:54235");
+
+            object actual = null;
+
+            SpinWait.SpinUntil(() =>
+            {
+                actual = _driver.ExecuteScript("return JSON.stringify(JsInterop.specified)");
+                return actual != null && actual.ToString() != "null";
+            }, TimeSpan.FromSeconds(2));
+
+            Assert.Equal("{\"Member\":\"abc\"}", actual);
+        }
+
     }
 }

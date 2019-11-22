@@ -75,7 +75,20 @@ using (dynamic context = new EvalContext(JsRuntime))
 {
     var arg = new { Property = "Value", Field = 123, child = new { Member = new DateTime(2001, 1, 1) } };
     (context as EvalContext).Expression = () => context.JsInterop.set(arg);
-	//Bind({"Property":"Value","Field":123,"child":{"Member":"2001-01-01T00:00:00"}})
+	//JsInterop.set({"Property":"Value","Field":123,"child":{"Member":"2001-01-01T00:00:00"}})
+}
+```
+
+Passing user-defined types takes more effort, but not too much:
+
+```csharp
+var settings = new EvalContextSettings();
+settings.SerializableTypes.Add(typeof(Specified));
+using (dynamic context = new EvalContext(JsRuntime, settings))
+{
+    var arg = new Specified { Member = "abc" };
+    (context as EvalContext).Expression = () => context.JsInterop.setSpecified(arg);
+	//JsInterop.setSpecified({"Member":"abc"})
 }
 ```
 
