@@ -3,6 +3,7 @@
 Wouldn't it be really useful if you could run a line or two of Javascript in your Blazor C# app?
 Wouldn't it be handy if you could execute arbitrary Javascript at runtime without strings of script?
 Wouldn't it be a big plus if the Javascript code was declared as a dynamic object expression and could be exposed to unit tests?
+Wouldn't it be nice if you could consume Javascript library API's without creating interop wrappers?
 
 Calling dynamic Javascript from C# at runtime couldn't be easier:
 
@@ -35,7 +36,7 @@ var cookie = await (context as EvalContext).InvokeAsync<string>();
 //document.cookie
 ```
 
-In order to satisfy the C# parser, by convention an underscore ("_") stands in for a space character in Javascript:
+In order to satisfy the C# parser, by default an underscore ("_") stands in for a space character in Javascript (but this is configurable):
 
 ```csharp
 using (dynamic context = new EvalContext(JSRuntimeInstance))
@@ -57,4 +58,25 @@ using (dynamic context = new EvalContext(JSRuntimeInstance))
 }
 ```
 
-The execution of Javascript is performed with the eval() function. You have been warned (and should probably know better).
+Maybe you feel like a bit of JQuery?
+
+```csharp
+using (dynamic context = new EvalContext(JsRuntime))
+{
+    (context as EvalContext).Expression = () => context.jQuery("body").css("overflow-y", "hidden");
+	//jQuery("body").css("overflow-y", "hidden")
+}
+```
+
+How about passing complex types as arguments? We've got you covered for anonymous types:
+
+```csharp
+using (dynamic context = new EvalContext(JsRuntime))
+{
+    var arg = new { Property = "Value", Field = 123, child = new { Member = new DateTime(2001, 1, 1) } };
+    (context as EvalContext).Expression = () => context.JsInterop.set(arg);
+	//Bind({"Property":"Value","Field":123,"child":{"Member":"2001-01-01T00:00:00"}})
+}
+```
+
+The execution of Javascript is performed with the eval() function, so it's imperative to sanitize user input that's passed into the Javascript runtime. You have been warned.

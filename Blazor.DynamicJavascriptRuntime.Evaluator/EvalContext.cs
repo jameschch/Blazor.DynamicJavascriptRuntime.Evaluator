@@ -3,7 +3,9 @@ using System;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Blazor.DynamicJavascriptRuntime.Evaluator
@@ -159,6 +161,11 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
             {
                 return "new Date(\u0022" + ((DateTime)value).ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffffffzzz") + "\u0022)";
             }
+            else if (IsAnonymousType(value.GetType()))
+            {
+                return JsonSerializer.Serialize(value, _settings.JsonSerializerOptions);
+            }
+            //todo: Allow user defined serializable types
             return value;
         }
 
@@ -237,6 +244,11 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
             _hasInvoked = true;
             _escaped = _settings.DisableSpaceCharacterPlaceholderReplacement ? _script.ToString() : _script.ToString().Replace(_settings.SpaceCharacterPlaceholder, " ");
 
+        }
+
+        private static bool IsAnonymousType(Type type)
+        {
+            return type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Count() > 0 && type.FullName.Contains("AnonymousType");
         }
 
     }

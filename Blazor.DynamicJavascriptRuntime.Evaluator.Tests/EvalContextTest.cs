@@ -290,6 +290,20 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
             Verify(runtime, "jQuery(\"body\").css(\"overflow-y\", \"hidden\")");
         }
 
+        [Fact]
+        public void Given_a_dynamic_expression_And_anonymous_type_argument_is_supplied_When_invoked_Then_should_serialize_argument_And_execute_evaluation()
+        {
+            var runtime = new Mock<IJSRuntime>();
+            using (dynamic context = new EvalContext(runtime.Object))
+            {
+
+                var arg = new { Property = "Value", Field = 123, child = new { Member = new DateTime(2001, 1, 1) } };
+                (context as EvalContext).Expression = () => context.Bind(arg);
+            }
+
+            Verify(runtime, "Bind({\"Property\":\"Value\",\"Field\":123,\"child\":{\"Member\":\"2001-01-01T00:00:00\"}})");
+        }
+
         private static void SetupReturnValue<T>(Mock<IJSRuntime> runtime, string expected, string script)
         {
             runtime.Setup(v => v.InvokeAsync<T>($"BlazorDynamicJavascriptRuntime.evaluate", It.Is<object[]>(m => m[0].ToString() == script)))

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace Blazor.DynamicJavascriptRuntime.Evaluator
 {
@@ -22,6 +23,11 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         /// Forces executed Javascript to be logged to the debug output
         /// </summary>
         public bool EnableDebugLogging { get; set; }
+
+        /// <summary>
+        /// Allows options to be specifed for Json Serialization of arguments
+        /// </summary>
+        public JsonSerializerOptions JsonSerializerOptions { get; set; }
 
     }
 }
