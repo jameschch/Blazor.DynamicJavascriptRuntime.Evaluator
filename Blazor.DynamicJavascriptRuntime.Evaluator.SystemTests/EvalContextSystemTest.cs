@@ -39,7 +39,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
                 return actual != null && actual.ToString() != "null";
             }, TimeSpan.FromSeconds(2));
 
-            Assert.Equal("{\"Property\":\"Value\",\"Field\":123,\"child\":{\"Member\":\"2001-01-01T00:00:00\"}}", actual);
+            Assert.Equal("{\"property\":\"Value\",\"field\":123,\"child\":{\"member\":\"2001-01-01T00:00:00\"}}", actual);
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
                 return actual != null && actual.ToString() != "null";
             }, TimeSpan.FromSeconds(2));
 
-            Assert.Equal("{\"Member\":\"abc\"}", actual);
+            Assert.Equal("{\"member\":\"abc\"}", actual);
         }
 
     }

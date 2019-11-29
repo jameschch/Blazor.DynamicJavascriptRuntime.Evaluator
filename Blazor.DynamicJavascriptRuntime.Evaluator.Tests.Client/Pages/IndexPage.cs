@@ -25,7 +25,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client.Pages
             settings.SerializableTypes.Add(typeof(Specified));
             using (dynamic context = new EvalContext(JsRuntime, settings))
             {
-                var arg = new Specified { Member = "abc" };
+                var arg = new Specified { Member = "abc", Empty = null };
                 (context as EvalContext).Expression = () => context.JsInterop.setSpecified(arg);
             }
 
@@ -35,6 +35,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client.Pages
         private class Specified
         {
             public string Member { get; set; }
+            public string Empty { get; set; }
         }
 
     }

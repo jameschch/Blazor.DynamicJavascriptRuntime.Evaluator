@@ -73,9 +73,9 @@ How about passing complex types as arguments? We've got you covered for anonymou
 ```csharp
 using (dynamic context = new EvalContext(JsRuntime))
 {
-    var arg = new { Property = "Value", Field = 123, child = new { Member = new DateTime(2001, 1, 1) } };
+    var arg = new { Property = "Value", Field = 123, Child = new { Member = new DateTime(2001, 1, 1) } };
     (context as EvalContext).Expression = () => context.JsInterop.set(arg);
-	//JsInterop.set({"Property":"Value","Field":123,"child":{"Member":"2001-01-01T00:00:00"}})
+	//JsInterop.set({"property":"Value","field":123,"child":{"member":"2001-01-01T00:00:00"}})
 }
 ```
 
@@ -88,7 +88,7 @@ using (dynamic context = new EvalContext(JsRuntime, settings))
 {
     var arg = new Specified { Member = "abc" };
     (context as EvalContext).Expression = () => context.JsInterop.setSpecified(arg);
-	//JsInterop.setSpecified({"Member":"abc"})
+	//JsInterop.setSpecified({"member":"abc"})
 }
 ```
 

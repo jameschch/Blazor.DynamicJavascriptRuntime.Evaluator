@@ -27,7 +27,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         /// <summary>
         /// Allows options to be specifed for Json Serialization of arguments
         /// </summary>
-        public JsonSerializerOptions JsonSerializerOptions { get; set; }
+        public JsonSerializerOptions JsonSerializerOptions { get; set; } = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase, IgnoreNullValues = true };
 
         /// <summary>
         /// Specified types will be serialized into Javascript objects
