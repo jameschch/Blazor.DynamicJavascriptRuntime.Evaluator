@@ -5,18 +5,18 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <Authors>jameschch</Authors>
     <Company></Company>
-    <ApplicationIcon></ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.8</Version>
     <PackageLicenseUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.ico</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.png</PackageIconUrl>
     <PackageId>DynamicJavascriptRuntime.Blazor.Evaluator</PackageId>
-    <Description>Execute dynamic object expressions as Javascript in Blazor</Description>
-    <PackageTags>blazor javascript dynamic JSRuntime JSInterop</PackageTags>
+    <Description>Execute dynamic object expressions as Javascript in Blazor WebAssembly</Description>
+    <PackageTags>blazor javascript dynamic JSRuntime JSInterop evaluator Blazor razor JS gasmask wasm webassembly</PackageTags>
     <Product>Blazor DynamicJavascriptRuntime Evaluator</Product>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <AssemblyVersion>1.0.8.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
