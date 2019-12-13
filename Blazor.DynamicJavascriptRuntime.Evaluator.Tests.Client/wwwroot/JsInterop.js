@@ -10,6 +10,12 @@
 
     setSpecified: function (value) {
         this.specified = value;
-    }
+    },
+
+    callMethod: function (value) {
+        return value + 1;
+    },
+
+    returnValue: null
 
 };

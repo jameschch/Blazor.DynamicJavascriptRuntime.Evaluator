@@ -29,6 +29,20 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client.Pages
                 (context as EvalContext).Expression = () => context.JsInterop.setSpecified(arg);
             }
 
+            double value = 1;
+            using (dynamic context = new EvalContext(JsRuntime))
+            {
+                (context as EvalContext).Expression = () => context.JsInterop.callMethod(value);
+                value = (context as EvalContext).Invoke<double>();
+            }
+
+            using (dynamic context = new EvalContext(JsRuntime))
+            {
+                (context as EvalContext).Expression = () => context.JsInterop.returnValue = value;
+            }
+
+            new EvalContext(JsRuntime).Invoke<dynamic>($"JsInterop.returnValue = {value}");
+
             return base.OnInitializedAsync();
         }
 

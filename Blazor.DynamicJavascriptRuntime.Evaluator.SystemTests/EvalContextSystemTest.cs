@@ -60,5 +60,23 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             Assert.Equal("{\"member\":\"abc\"}", actual);
         }
 
+        [Fact]
+        public void Given_a_blazor_app_When_invoking_synchronously_Then_should_execute()
+        {
+            Tests.Client.Program.Main(null);
+
+            _driver.Navigate().GoToUrl("http://localhost:54235");
+
+            object actual = null;
+
+            SpinWait.SpinUntil(() =>
+            {
+                actual = _driver.ExecuteScript("return JsInterop.returnValue");
+                return actual != null && actual.ToString() != "null";
+            }, TimeSpan.FromSeconds(2));
+
+            Assert.Equal(2, (long)actual);
+        }
+
     }
 }

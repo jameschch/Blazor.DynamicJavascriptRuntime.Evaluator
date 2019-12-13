@@ -184,7 +184,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         }
 
         /// <summary>
-        /// Explicitly invokes the Javascript expression and returns a value
+        /// Invokes the Javascript expression and returns a value
         /// </summary>
         /// <typeparam name="T">The return type</typeparam>
         /// <returns>The value returned from Javascript</returns>
@@ -195,6 +195,40 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
                 Build();
             }
             return await InvokeAsync<T>(_escaped);
+        }
+
+        /// <summary>
+        /// Invokes the Javascript expression and returns a value
+        /// </summary>
+        /// <typeparam name="T">The return type</typeparam>
+        /// <returns>The value returned from Javascript</returns>
+        public virtual T Invoke<T>()
+        {
+            if (!_hasInvoked)
+            {
+                Build();
+            }
+            return Invoke<T>(_escaped);
+        }
+
+        /// <summary>
+        /// Invokes the Javascript expression and returns a value
+        /// </summary>
+        /// <typeparam name="T">The return type</typeparam>
+        /// <returns>The value returned from Javascript</returns>
+        public virtual T Invoke<T>(string script)
+        {
+            _hasInvoked = true;
+#if DEBUG
+            Debug.WriteLine("BDJR: " + script);
+#else
+            if (_settings.EnableDebugLogging)
+            {
+                Debug.WriteLine("BDJR: " + script);
+            }
+#endif
+
+            return ((IJSInProcessRuntime)_runtime).Invoke<T>("BlazorDynamicJavascriptRuntime.evaluate", new object[] { script });
         }
 
         /// <summary>

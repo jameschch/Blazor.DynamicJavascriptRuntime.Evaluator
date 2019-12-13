@@ -191,6 +191,36 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         }
 
         [Fact]
+        public void Given_a_dynamic_expression_And_a_value_is_returned_When_invoked_synchronously_Then_should_execute_evaluation_And_return_value()
+        {
+            var runtime = new Mock<IJSInProcessRuntime>();
+            var script = "method(1)";
+            var expected = "2";
+            runtime.Setup(v => v.Invoke<string>($"BlazorDynamicJavascriptRuntime.evaluate", It.Is<object[]>(m => m[0].ToString() == script))).Returns(expected);
+
+            dynamic context = new EvalContext(runtime.Object);
+            (context as EvalContext).Expression = () => context.method(1);
+            var actual = (context as EvalContext).Invoke<string>();
+
+            Assert.Equal(expected, actual);
+            runtime.Verify(v => v.Invoke<string>($"BlazorDynamicJavascriptRuntime.evaluate", It.Is<object[]>(m => m[0].ToString() == script)), Times.Once);
+        }
+
+        [Fact]
+        public void Given_a_string_of_javascript_And_a_value_is_returned_When_invoked_synchronously_Then_should_execute_evaluation_And_return_value()
+        {
+            var runtime = new Mock<IJSInProcessRuntime>();
+            var script = "method(1)";
+            var expected = "2";
+            runtime.Setup(v => v.Invoke<string>($"BlazorDynamicJavascriptRuntime.evaluate", It.Is<object[]>(m => m[0].ToString() == script))).Returns(expected);
+
+            var actual = new EvalContext(runtime.Object).Invoke<string>(script);
+
+            Assert.Equal(expected, actual);
+            runtime.Verify(v => v.Invoke<string>($"BlazorDynamicJavascriptRuntime.evaluate", It.Is<object[]>(m => m[0].ToString() == script)), Times.Once);
+        }
+
+        [Fact]
         public void Given_a_dynamic_expression_And_a_date_When_invoked_Then_should_execute_evaluation()
         {
             var runtime = new Mock<IJSRuntime>();
