@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Blazor.DynamicJavascriptRuntime.Evaluator
@@ -155,7 +156,8 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
             }
             if (value is string)
             {
-                return $"\"{value.ToString().Replace("'", "\u0027").Replace("\"", "\\u0022")}\"";
+                var delimiter = Regex.IsMatch(value.ToString(), "[\r\n]") ? '`' : '\"';
+                return $"{delimiter}{value.ToString().Replace("'", "\u0027").Replace("\"", "\\u0022")}{delimiter}";
             }
             else if (value is DateTime)
             {
@@ -232,7 +234,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         }
 
         /// <summary>
-        /// Executes an arbitrary string of Javascript
+        /// Executes the provided string of Javascript
         /// </summary>
         /// <typeparam name="T">The return type</typeparam>
         /// <param name="script">A string of Javascript</param>
@@ -262,7 +264,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         }
 
         /// <summary>
-        /// Resets the context allowing for multiple invocations on a single instance.
+        /// Resets the context allowing for multiple invocations on a single instance
         /// </summary>
         public void Reset()
         {

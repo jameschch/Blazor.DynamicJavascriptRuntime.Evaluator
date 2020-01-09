@@ -27,6 +27,21 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
             Verify(runtime, "Chart.defaults.global.defaultFontColor = \"#FFF\"");
         }
 
+        [Theory]
+        [InlineData("message", "\"message\"")]
+        [InlineData("mess\rage", "`mess\rage`")]
+        [InlineData("mess\nage", "`mess\nage`")]
+        [InlineData("mess\r\nage", "`mess\r\nage`")]
+        public void Given_a_dynamic_expression_And_multiline_string_argument_When_invoked_Then_should_execute_evaluation(string argument, string expected)
+        {
+            var runtime = new Mock<IJSRuntime>();
+            using (dynamic context = new EvalContext(runtime.Object))
+            {
+                (context as EvalContext).Expression = () => context.alert(argument);
+            }
+            Verify(runtime, $"alert({expected})");
+        }
+
         [Fact]
         public void Given_a_dynamic_expression_And_arguments_are_supplied_When_invoked_Then_should_execute_evaluation()
         {
@@ -194,12 +209,12 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         public void Given_a_dynamic_expression_And_a_value_is_returned_When_invoked_synchronously_Then_should_execute_evaluation_And_return_value()
         {
             var runtime = new Mock<IJSInProcessRuntime>();
-            var script = "method(1)";
+            var script = "method(\"1\")";
             var expected = "2";
             runtime.Setup(v => v.Invoke<string>($"BlazorDynamicJavascriptRuntime.evaluate", It.Is<object[]>(m => m[0].ToString() == script))).Returns(expected);
 
             dynamic context = new EvalContext(runtime.Object);
-            (context as EvalContext).Expression = () => context.method(1);
+            (context as EvalContext).Expression = () => context.method("1");
             var actual = (context as EvalContext).Invoke<string>();
 
             Assert.Equal(expected, actual);
@@ -210,7 +225,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         public void Given_a_string_of_javascript_And_a_value_is_returned_When_invoked_synchronously_Then_should_execute_evaluation_And_return_value()
         {
             var runtime = new Mock<IJSInProcessRuntime>();
-            var script = "method(1)";
+            var script = "method(\"1\")";
             var expected = "2";
             runtime.Setup(v => v.Invoke<string>($"BlazorDynamicJavascriptRuntime.evaluate", It.Is<object[]>(m => m[0].ToString() == script))).Returns(expected);
 
