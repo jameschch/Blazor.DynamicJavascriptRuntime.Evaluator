@@ -95,7 +95,15 @@ The execution of Javascript is performed with the eval() function, so it's imper
 
 ## Setup
 
-You merely need to create a script include in your index.htm:
+First, install from nuget:
+
+```
+Install-Package DynamicJavascriptRuntime.Blazor.Evaluator -Version 1.1.0
+```
+
+[https://www.nuget.org/packages/DynamicJavascriptRuntime.Blazor.Evaluator/](https://www.nuget.org/packages/DynamicJavascriptRuntime.Blazor.Evaluator/)
+
+You then need to create a script include in your index.htm:
 
 ```html
     <script src="_content/DynamicJavascriptRuntime.Blazor.Evaluator/BlazorDynamicJavascriptRuntime.js"></script>
