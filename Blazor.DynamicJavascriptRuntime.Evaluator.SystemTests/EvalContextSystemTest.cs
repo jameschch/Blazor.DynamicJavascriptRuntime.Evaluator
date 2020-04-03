@@ -3,6 +3,7 @@ using Xunit;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
 {
@@ -14,8 +15,9 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
         public EvalContextSystemTest()
         {
             var options = new ChromeOptions();
+            //options.AddArgument("no-sandbox");
             options.AddArguments("headless");
-            _driver = new ChromeDriver(options);
+            _driver = new ChromeDriver(".", options);
         }
 
         public void Dispose()
@@ -27,8 +29,6 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
         [Fact]
         public void Given_a_blazor_app_When_passing_anonymous_argument_Then_should_serialize_and_execute()
         {
-            Tests.Client.Program.Main(null);
-
             _driver.Navigate().GoToUrl("http://localhost:54235");
 
             object actual = null;
@@ -45,8 +45,6 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
         [Fact]
         public void Given_a_blazor_app_When_passing_argument_And_specifying_as_serializable_type_Then_should_serialize_and_execute()
         {
-            Tests.Client.Program.Main(null);
-
             _driver.Navigate().GoToUrl("http://localhost:54235");
 
             object actual = null;
@@ -63,8 +61,6 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
         [Fact]
         public void Given_a_blazor_app_When_invoking_synchronously_Then_should_execute()
         {
-            Tests.Client.Program.Main(null);
-
             _driver.Navigate().GoToUrl("http://localhost:54235");
 
             object actual = null;

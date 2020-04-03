@@ -5,7 +5,7 @@ Wouldn't it be handy if you could execute arbitrary Javascript at runtime withou
 Wouldn't it be a big plus if the Javascript code was declared as a dynamic object expression and could be exposed to unit tests?
 Wouldn't it be nice if you could consume Javascript library API's without creating interop wrappers?
 
-Calling dynamic Javascript from C# at runtime couldn't be easier:
+Calling Javascript dynamically from C# couldn't be easier:
 
 ```csharp
 using (dynamic context = new EvalContext(JSRuntimeInstance))
@@ -27,7 +27,7 @@ using (dynamic context = new EvalContext(JSRuntimeInstance))
 }
 ```
 
-Need to call a function that returns a value? No problem:
+Need to call some script that returns a value? No problem:
 
 ```csharp
 dynamic context = new EvalContext(runtime.Object);
@@ -47,14 +47,13 @@ using (dynamic context = new EvalContext(JSRuntimeInstance))
 }
 ```
 
-The dynamic expression is eagerly evaluated. This means floating point arithmetic will not be completely broken (it won't run in Javascript):
+The dynamic expression is eagerly evaluated. This means decimal arithmetic will not be mangled by Javascript:
 
 ```csharp
 using (dynamic context = new EvalContext(JSRuntimeInstance))
 {
-	(context as EvalContext).Expression = () => context.sum = 0.1 + 0.2 * 0.5 / 0.5;
+	(context as EvalContext).Expression = () => context.sum = 0.1M + 0.2M * 0.5M / 0.5M;
 	//sum = 0.3;
-	//result in Javascript is 0.30000000000000004
 }
 ```
 
@@ -74,8 +73,8 @@ How about passing complex types as arguments? We've got you covered for anonymou
 using (dynamic context = new EvalContext(JsRuntime))
 {
     var arg = new { Property = "Value", Field = 123, Child = new { Member = new DateTime(2001, 1, 1) } };
-    (context as EvalContext).Expression = () => context.JsInterop.set(arg);
-	//JsInterop.set({"property":"Value","field":123,"child":{"member":"2001-01-01T00:00:00"}})
+    (context as EvalContext).Expression = () => context.myScript.set(arg);
+	//myScript.set({"property":"Value","field":123,"child":{"member":"2001-01-01T00:00:00"}})
 }
 ```
 
@@ -87,9 +86,17 @@ settings.SerializableTypes.Add(typeof(Specified));
 using (dynamic context = new EvalContext(JsRuntime, settings))
 {
     var arg = new Specified { Member = "abc" };
-    (context as EvalContext).Expression = () => context.JsInterop.setSpecified(arg);
-	//JsInterop.setSpecified({"member":"abc"})
+    (context as EvalContext).Expression = () => context.myScript.setSpecified(arg);
+	//myScript.setSpecified({"member":"abc"})
 }
 ```
 
 The execution of Javascript is performed with the eval() function, so it's imperative to sanitize user input that's passed into the Javascript runtime. You have been warned.
+
+## Setup
+
+You merely need to create a script include in your index.htm:
+
+```html
+    <script src="_content/DynamicJavascriptRuntime.Blazor.Evaluator/BlazorDynamicJavascriptRuntime.js"></script>
+```

@@ -280,7 +280,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
                 dynamic arg = new EvalContext(runtime.Object);
                 (context as EvalContext).Expression = () => context.sum = 0.1 + 0.2 * 0.5 / 0.5;
             }
-            Verify(runtime, "sum = 0.3");
+            Verify(runtime, "sum = 0.30000000000000004");
         }
 
         [Fact]
@@ -290,7 +290,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
             using (dynamic context = new EvalContext(runtime.Object))
             {
                 dynamic arg = new EvalContext(runtime.Object);
-                (context as EvalContext).Expression = () => context.sum = 0.1d + 0.2d * 0.5d / 0.5d;
+                (context as EvalContext).Expression = () => context.sum = 0.1m + 0.2m * 0.5m / 0.5m;
             }
             Verify(runtime, "sum = 0.3");
         }
