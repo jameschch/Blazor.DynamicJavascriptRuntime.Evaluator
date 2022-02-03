@@ -11,9 +11,9 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.Services.AddSingleton<IServiceProvider>(builder.Services.BuildServiceProvider());
-            builder.Services.AddBaseAddressHttpClient();
+            //builder.Services.AddBaseAddressHttpClient();
 
-            builder.RootComponents.Add<App>("app");
+            builder.RootComponents.Add<App>("#app");
 
             await builder.Build().RunAsync();
         }
