@@ -10,7 +10,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
     public class EvalContextSystemTest : IDisposable
     {
 
-        private ChromeDriver _driver;
+        private readonly ChromeDriver _driver;
 
         public EvalContextSystemTest()
         {
@@ -68,6 +68,22 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             SpinWait.SpinUntil(() =>
             {
                 actual = _driver.ExecuteScript("return JsInterop.returnValue");
+                return actual != null && actual.ToString() != "null";
+            }, TimeSpan.FromSeconds(2));
+
+            Assert.Equal(2, (long)actual);
+        }
+
+        [Fact]
+        public void Given_a_blazor_app_When_invoking_asynchronously_Then_should_execute()
+        {
+            _driver.Navigate().GoToUrl("http://localhost:54235");
+
+            object actual = null;
+
+            SpinWait.SpinUntil(() =>
+            {
+                actual = _driver.ExecuteScript("return JsInterop.anotherReturnValue");
                 return actual != null && actual.ToString() != "null";
             }, TimeSpan.FromSeconds(2));
 

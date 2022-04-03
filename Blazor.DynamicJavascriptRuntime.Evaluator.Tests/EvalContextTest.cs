@@ -27,6 +27,42 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
             Verify(runtime, "Chart.defaults.global.defaultFontColor = \"#FFF\"");
         }
 
+        [Fact]
+        public void Given_a_dynamic_expression_called_on_context_When_invoked_Then_should_execute_evaluation()
+        {
+            var runtime = new Mock<IJSRuntime>();
+            using (var context = new EvalContext(runtime.Object))
+            {
+                (context as dynamic).Chart.defaults.global.animation.duration = 0;
+            }
+            Verify(runtime, "Chart.defaults.global.animation.duration = 0");
+
+            using (var context = new EvalContext(runtime.Object))
+            {
+                (context as dynamic).Chart.defaults.global.defaultFontColor = "#FFF";
+            }
+            Verify(runtime, "Chart.defaults.global.defaultFontColor = \"#FFF\"");
+        }
+
+        [Fact]
+        public async Task Given_a_dynamic_expression_When_invoke_void_is_called_Then_should_execute_evaluation()
+        {
+            var runtime = new Mock<IJSRuntime>();
+            var context = new EvalContext(runtime.Object);
+
+            (context as dynamic).Chart.defaults.global.animation.duration = 0;
+            await context.InvokeVoidAsync();
+
+            Verify<object>(runtime, "Chart.defaults.global.animation.duration = 0");
+
+            context.Reset();
+            (context as dynamic).Chart.defaults.global.defaultFontColor = "#FFF";
+            await context.InvokeVoidAsync();
+
+
+            Verify<object>(runtime, "Chart.defaults.global.defaultFontColor = \"#FFF\"");
+        }
+
         [Theory]
         [InlineData("message", "\"message\"")]
         [InlineData("mess\rage", "`mess\rage`")]
@@ -148,7 +184,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         }
 
         [Fact]
-        public async Task Given_a_string_of_javascript_When_invoked_Then_should_execute_evaluation()
+        public async Task Given_a_string_of_javascript_And_a_value_is_returned_When_invoked_Then_should_execute_evaluation()
         {
             var runtime = new Mock<IJSRuntime>();
             var expected = "expected";
@@ -160,6 +196,16 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
                 var actual = await (context as EvalContext).InvokeAsync<dynamic>(script);
                 Assert.Equal(expected, actual);
             }
+            Verify(runtime, script);
+        }
+
+        [Fact]
+        public async Task Given_a_string_of_javascript_When_invoked_Then_should_execute_evaluation()
+        {
+            var runtime = new Mock<IJSRuntime>();
+            var script = "Console.Write('expected')";
+
+            await (new EvalContext(runtime.Object).InvokeVoidAsync(script));
             Verify(runtime, script);
         }
 
@@ -296,7 +342,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         }
 
         [Fact]
-        public async Task Given_multiple_dynamic_expressions_When_invoked_And_reset_And_invoked_Then_should_execute_mutliple_evaluations()
+        public async Task Given_multiple_dynamic_expressions_When_invoked_And_reset_And_invoked_Then_should_execute_multiple_evaluations()
         {
             var runtime = new Mock<IJSRuntime>();
             var expected = "value";
@@ -306,7 +352,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
                 var evalContext = (context as EvalContext);
                 dynamic arg = new EvalContext(runtime.Object);
                 evalContext.Expression = () => context.var_instance = arg.new_object();
-                await evalContext.InvokeAsync<dynamic>();
+                await evalContext.InvokeVoidAsync();
                 evalContext.Reset();
                 evalContext.Expression = () => context.instance.property = expected;
                 await evalContext.InvokeAsync<dynamic>();

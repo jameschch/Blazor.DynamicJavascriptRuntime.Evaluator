@@ -15,9 +15,9 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
     public class EvalContext : DynamicObject, IDisposable, IEvalContext
     {
 
-        private StringBuilder _script;
+        private readonly StringBuilder _script;
         private bool _hasInvoked;
-        private IJSRuntime _runtime;
+        private readonly IJSRuntime _runtime;
         private readonly EvalContextSettings _settings;
         private string _escaped;
 
@@ -41,7 +41,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         {
             if (_script.Length > 0)
             {
-                _script.Append(".");
+                _script.Append('.');
             }
 
             _script.Append(value);
@@ -59,9 +59,9 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         {
             if (!_hasInvoked)
             {
-                _script.Append("[");
+                _script.Append('[');
                 _script.Append(Massage(index));
-                _script.Append("]");
+                _script.Append(']');
                 _script.Append(" = ");
                 _script.Append(Massage(value));
             }
@@ -94,10 +94,10 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
                 var isString = indexes[0] is string;
                 if (indexes[0] is EvalContext || indexes[0] is int || isString)
                 {
-                    _script.Append("[");
+                    _script.Append('[');
                     var value = isString ? Massage(indexes[0]) : indexes[0].ToString();
                     _script.Append(value);
-                    _script.Append("]");
+                    _script.Append(']');
                 }
                 else
                 {
@@ -125,7 +125,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
             {
                 if (_script.Length > 0)
                 {
-                    _script.Append(".");
+                    _script.Append('.');
                 }
 
                 var attempts = args.Select(a => Massage(a));
@@ -200,6 +200,14 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         }
 
         /// <summary>
+        /// Invokes the Javascript expression
+        /// </summary>
+        public async virtual ValueTask InvokeVoidAsync()
+        {
+            await InvokeAsync<object>();
+        }
+
+        /// <summary>
         /// Invokes the Javascript expression and returns a value
         /// </summary>
         /// <typeparam name="T">The return type</typeparam>
@@ -214,7 +222,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         }
 
         /// <summary>
-        /// Invokes the Javascript expression and returns a value
+        /// Invokes the Javascript string and returns a value
         /// </summary>
         /// <typeparam name="T">The return type</typeparam>
         /// <returns>The value returned from Javascript</returns>
@@ -230,11 +238,11 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
             }
 #endif
 
-            return ((IJSInProcessRuntime)_runtime).Invoke<T>("BlazorDynamicJavascriptRuntime.evaluate", new object[] { script });
+            return ((IJSInProcessRuntime)_runtime).Invoke<T>("BlazorDynamicJavascriptRuntime.evaluate", script);
         }
 
         /// <summary>
-        /// Executes the provided string of Javascript
+        /// Executes the provided string of Javascript and returns a value
         /// </summary>
         /// <typeparam name="T">The return type</typeparam>
         /// <param name="script">A string of Javascript</param>
@@ -251,7 +259,16 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
             }
 #endif
 
-            return await _runtime.InvokeAsync<T>("BlazorDynamicJavascriptRuntime.evaluate", new object[] { script });
+            return await _runtime.InvokeAsync<T>("BlazorDynamicJavascriptRuntime.evaluate", script);
+        }
+
+        /// <summary>
+        /// Executes the provided string of Javascript
+        /// </summary>
+        /// <param name="script">A string of Javascript</param>
+        public async virtual ValueTask InvokeVoidAsync(string script)
+        {
+            await InvokeAsync<object>(script);
         }
 
         public void Dispose()
@@ -278,13 +295,14 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         {
             Expression?.Invoke();
             _hasInvoked = true;
-            _escaped = _settings.DisableSpaceCharacterPlaceholderReplacement ? _script.ToString() : _script.ToString().Replace(_settings.SpaceCharacterPlaceholder, " ");
+            _escaped = _settings.DisableSpaceCharacterPlaceholderReplacement ? _script.ToString() : 
+                _script.ToString().Replace(_settings.SpaceCharacterPlaceholder, " ");
 
         }
 
         private static bool IsAnonymousType(Type type)
         {
-            return type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Count() > 0 && type.FullName.Contains("AnonymousType");
+            return type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Length > 0 && type.FullName.Contains("AnonymousType");
         }
 
     }

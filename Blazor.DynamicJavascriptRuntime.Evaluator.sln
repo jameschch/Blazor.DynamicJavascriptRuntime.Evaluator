@@ -12,32 +12,50 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client", "Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client\Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client.csproj", "{23D543D0-77CE-4273-B3FF-867E6D54F15A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client", "Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client\Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client.csproj", "{23D543D0-77CE-4273-B3FF-867E6D54F15A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests", "Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests\Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests.csproj", "{DD27E4E5-640C-48F9-9915-2FD882E10708}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests", "Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests\Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests.csproj", "{DD27E4E5-640C-48F9-9915-2FD882E10708}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Debug|x64.Build.0 = Debug|Any CPU
 		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Release|x64.ActiveCfg = Release|Any CPU
+		{0BBC05CC-450B-4F02-B1C1-BA6F37D68F64}.Release|x64.Build.0 = Release|Any CPU
 		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Debug|x64.Build.0 = Debug|Any CPU
 		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Release|x64.ActiveCfg = Release|Any CPU
+		{87A44053-DCF8-4F05-8377-DD000A6DD80E}.Release|x64.Build.0 = Release|Any CPU
 		{23D543D0-77CE-4273-B3FF-867E6D54F15A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{23D543D0-77CE-4273-B3FF-867E6D54F15A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23D543D0-77CE-4273-B3FF-867E6D54F15A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{23D543D0-77CE-4273-B3FF-867E6D54F15A}.Debug|x64.Build.0 = Debug|Any CPU
 		{23D543D0-77CE-4273-B3FF-867E6D54F15A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23D543D0-77CE-4273-B3FF-867E6D54F15A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23D543D0-77CE-4273-B3FF-867E6D54F15A}.Release|x64.ActiveCfg = Release|Any CPU
+		{23D543D0-77CE-4273-B3FF-867E6D54F15A}.Release|x64.Build.0 = Release|Any CPU
 		{DD27E4E5-640C-48F9-9915-2FD882E10708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD27E4E5-640C-48F9-9915-2FD882E10708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD27E4E5-640C-48F9-9915-2FD882E10708}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DD27E4E5-640C-48F9-9915-2FD882E10708}.Debug|x64.Build.0 = Debug|Any CPU
 		{DD27E4E5-640C-48F9-9915-2FD882E10708}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD27E4E5-640C-48F9-9915-2FD882E10708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD27E4E5-640C-48F9-9915-2FD882E10708}.Release|x64.ActiveCfg = Release|Any CPU
+		{DD27E4E5-640C-48F9-9915-2FD882E10708}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

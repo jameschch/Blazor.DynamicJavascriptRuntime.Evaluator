@@ -1,4 +1,4 @@
-# Blazor.DynamicJavascriptRuntime.Evaluator
+# Blazor.DynamicJavascriptRuntime.Evaluator (A.K.A. Gasmask)
 
 Wouldn't it be really useful if you could run a line or two of Javascript in your Blazor C# app?
 Wouldn't it be handy if you could execute arbitrary Javascript at runtime without strings of script?
@@ -66,6 +66,7 @@ using (dynamic context = new EvalContext(JsRuntime))
 	//jQuery("body").css("overflow-y", "hidden")
 }
 ```
+Sorry, no $ allowed.
 
 How about passing complex types as arguments? We've got you covered for anonymous types:
 
@@ -98,13 +99,25 @@ The execution of Javascript is performed with the eval() function, so it's imper
 First, install from nuget:
 
 ```
-Install-Package DynamicJavascriptRuntime.Blazor.Evaluator -Version 1.2.0
+Install-Package DynamicJavascriptRuntime.Blazor.Evaluator -Version 1.2.0.1
 ```
 
 [https://www.nuget.org/packages/DynamicJavascriptRuntime.Blazor.Evaluator/](https://www.nuget.org/packages/DynamicJavascriptRuntime.Blazor.Evaluator/)
 
-You then need to create a script include in your index.htm:
+You then need to add a script include to your index.htm:
 
 ```html
     <script src="_content/DynamicJavascriptRuntime.Blazor.Evaluator/BlazorDynamicJavascriptRuntime.js"></script>
+```
+
+## Syntax
+
+The are a few different syntax options for dynamic expressions:
+
+- The ```using``` blocks wrapping the EvalContext are optional but prevent forgetten calls to Invoke.
+- Setting the ```Expression``` property is optional. You can chain an expression directly on the EvalContext e.g.:
+```csharp
+dynamic context = new EvalContext();
+context.alert("Gasmask");
+await (context as EvalContext).InvokeVoidAsync()
 ```

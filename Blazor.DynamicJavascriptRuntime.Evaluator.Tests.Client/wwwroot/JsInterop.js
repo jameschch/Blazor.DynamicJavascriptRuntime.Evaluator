@@ -16,6 +16,8 @@
         return value + 1;
     },
 
-    returnValue: null
+    returnValue: null,
+
+    anotherReturnValue: null
 
 };

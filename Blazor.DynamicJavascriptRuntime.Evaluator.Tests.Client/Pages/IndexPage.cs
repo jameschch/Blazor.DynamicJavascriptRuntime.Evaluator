@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client.Pages
@@ -13,7 +11,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client.Pages
         [Inject]
         public IJSRuntime JsRuntime { get; set; }
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             using (dynamic context = new EvalContext(JsRuntime))
             {
@@ -43,7 +41,11 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests.Client.Pages
 
             new EvalContext(JsRuntime).Invoke<dynamic>($"JsInterop.returnValue = {value}");
 
-            return base.OnInitializedAsync();
+            dynamic anotherContext = new EvalContext(JsRuntime);
+            anotherContext.JsInterop.anotherReturnValue = value;
+            await (anotherContext as EvalContext).InvokeVoidAsync();
+
+            await base.OnInitializedAsync();
         }
 
         private class Specified
