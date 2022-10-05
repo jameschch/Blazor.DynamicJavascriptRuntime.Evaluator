@@ -8,10 +8,18 @@ Wouldn't it be nice if you could consume Javascript library API's without creati
 Calling Javascript dynamically from C# couldn't be easier:
 
 ```csharp
+(new EvalContext(JSRuntimeInstance) as dynamic).window.location = "www.github.com";
+await (context as EvalContext).InvokeAsync<string>();
+//window.location = "www.github.com";
+```
+
+...or with alternate syntax:
+
+```csharp
 using (dynamic context = new EvalContext(JSRuntimeInstance))
 {
-	(context as EvalContext).Expression = () => context.window.location = "www.be-eval.com";
-	//window.location = "www.be-eval.com";
+	(context as EvalContext).Expression = () => context.window.location = "www.github.com";
+	//window.location = "www.github.com";
 }
 ```
 
@@ -99,7 +107,7 @@ The execution of Javascript is performed with the eval() function, so it's imper
 First, install from nuget:
 
 ```
-Install-Package DynamicJavascriptRuntime.Blazor.Evaluator -Version 1.2.0.1
+Install-Package DynamicJavascriptRuntime.Blazor.Evaluator -Version 1.3.0.0
 ```
 
 [https://www.nuget.org/packages/DynamicJavascriptRuntime.Blazor.Evaluator/](https://www.nuget.org/packages/DynamicJavascriptRuntime.Blazor.Evaluator/)
@@ -114,10 +122,11 @@ You then need to add a script include to your index.htm:
 
 The are a few different syntax options for dynamic expressions:
 
-- The ```using``` blocks wrapping the EvalContext are optional but prevent forgetten calls to Invoke.
+- The ```using``` blocks wrapping the EvalContext are optional but prevent forgotten calls to Invoke.
 - Setting the ```Expression``` property is optional. You can chain an expression directly on the EvalContext e.g.:
 ```csharp
 dynamic context = new EvalContext();
 context.alert("Gasmask");
 await (context as EvalContext).InvokeVoidAsync()
 ```
+- You can chain multiple javascript calls on separate lines with a single EvalContext. This makes sense for some "fluent" libraries like JQuery.

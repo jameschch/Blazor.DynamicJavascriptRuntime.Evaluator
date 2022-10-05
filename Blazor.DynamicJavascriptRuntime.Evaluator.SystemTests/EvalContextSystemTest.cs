@@ -53,7 +53,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             {
                 actual = _driver.ExecuteScript("return JSON.stringify(JsInterop.specified)");
                 return actual != null && actual.ToString() != "null";
-            }, TimeSpan.FromSeconds(3));
+            }, TimeSpan.FromSeconds(5));
 
             Assert.Equal("{\"member\":\"abc\"}", actual);
         }
@@ -85,7 +85,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             {
                 actual = _driver.ExecuteScript("return JsInterop.anotherReturnValue");
                 return actual != null && actual.ToString() != "null";
-            }, TimeSpan.FromSeconds(2));
+            }, TimeSpan.FromSeconds(5));
 
             Assert.Equal(2, (long)actual);
         }
