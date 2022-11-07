@@ -8,7 +8,7 @@ Wouldn't it be nice if you could consume Javascript library API's without creati
 Calling Javascript dynamically from C# couldn't be easier:
 
 ```csharp
-(new EvalContext(JSRuntimeInstance) as dynamic).window.location = "www.github.com";
+var context = (new EvalContext(JSRuntimeInstance) as dynamic).window.location = "www.github.com";
 await (context as EvalContext).InvokeAsync<string>();
 //window.location = "www.github.com";
 ```
@@ -44,12 +44,13 @@ var cookie = await (context as EvalContext).InvokeAsync<string>();
 //document.cookie
 ```
 
-In order to satisfy the C# parser, by default an underscore ("_") stands in for a space character in Javascript (but this is configurable):
+In order to satisfy the C# parser, an underscore ("_") can stand in for a space character in Javascript. This is disabled by default and you can configure your space placeholder:
 
 ```csharp
 using (dynamic context = new EvalContext(JSRuntimeInstance))
 {
-	dynamic arg = new EvalContext(JSRuntimeInstance);
+	var settings = new EvalContextSettings { EnableSpaceCharacterPlaceholderReplacement = true, SpaceCharacterPlaceholder = "_" };
+	dynamic arg = new EvalContext(JSRuntimeInstance, settings);
 	(context as EvalContext).Expression = () => context.var_instance = arg.new_object();
 	//var instance = new object();
 }
@@ -129,4 +130,4 @@ dynamic context = new EvalContext();
 context.alert("Gasmask");
 await (context as EvalContext).InvokeVoidAsync()
 ```
-- You can chain multiple javascript calls on separate lines with a single EvalContext. This makes sense for some "fluent" libraries like JQuery.
+- You can chain multiple javascript calls on separate lines with a single EvalContext. This makes sense for some "fluent" libraries like jQuery.

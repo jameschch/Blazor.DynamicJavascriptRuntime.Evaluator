@@ -11,7 +11,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         /// <summary>
         /// If set to true will disable replacing instance of the space character placeholder with a space
         /// </summary>
-        public bool DisableSpaceCharacterPlaceholderReplacement { get; set; }
+        public bool EnableSpaceCharacterPlaceholderReplacement { get; set; }
 
         /// <summary>
         /// Allows the definition of a placeholder for the space character. Defaults to underscore.

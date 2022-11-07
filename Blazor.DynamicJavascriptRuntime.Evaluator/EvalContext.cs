@@ -295,8 +295,8 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator
         {
             Expression?.Invoke();
             _hasInvoked = true;
-            _escaped = _settings.DisableSpaceCharacterPlaceholderReplacement ? _script.ToString() : 
-                _script.ToString().Replace(_settings.SpaceCharacterPlaceholder, " ");
+            _escaped = _settings.EnableSpaceCharacterPlaceholderReplacement ? _script.ToString().Replace(_settings.SpaceCharacterPlaceholder, " ")
+                : _script.ToString();
 
         }
 

@@ -159,7 +159,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         public void Given_a_dynamic_expression_And_a_declaration_When_invoked_Then_should_execute_evaluation()
         {
             var runtime = new Mock<IJSRuntime>();
-            using (dynamic context = new EvalContext(runtime.Object))
+            using (dynamic context = new EvalContext(runtime.Object, new EvalContextSettings { EnableSpaceCharacterPlaceholderReplacement = true }))
             {
                 dynamic arg = new EvalContext(runtime.Object);
                 (context as EvalContext).Expression = () => context.var_instance = arg.new_object();
@@ -168,12 +168,12 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
         }
 
         [Theory]
-        [InlineData("__", false, "var _instance = new object()")]
-        [InlineData("__", true, "var___instance = new__object()")]
-        public void Given_a_dynamic_expression_And_settings_Then_should_execute_evaluation(string replacing, bool disabled, string expected)
+        [InlineData("__", true, "var _instance = new object()")]
+        [InlineData("__", false, "var___instance = new__object()")]
+        public void Given_a_dynamic_expression_And_settings_Then_should_execute_evaluation(string replacing, bool enabled, string expected)
         {
             var runtime = new Mock<IJSRuntime>();
-            var settings = new EvalContextSettings { SpaceCharacterPlaceholder = replacing, DisableSpaceCharacterPlaceholderReplacement = disabled };
+            var settings = new EvalContextSettings { SpaceCharacterPlaceholder = replacing, EnableSpaceCharacterPlaceholderReplacement = enabled };
             using (dynamic context = new EvalContext(runtime.Object, settings))
             {
                 dynamic arg = new EvalContext(runtime.Object, settings);
@@ -347,7 +347,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.Tests
             var runtime = new Mock<IJSRuntime>();
             var expected = "value";
             SetupReturnValue<string>(runtime, expected, "instance.property");
-            using (dynamic context = new EvalContext(runtime.Object))
+            using (dynamic context = new EvalContext(runtime.Object, new EvalContextSettings { EnableSpaceCharacterPlaceholderReplacement = true }))
             {
                 var evalContext = (context as EvalContext);
                 dynamic arg = new EvalContext(runtime.Object);

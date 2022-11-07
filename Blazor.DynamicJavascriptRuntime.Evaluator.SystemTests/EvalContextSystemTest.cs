@@ -37,7 +37,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             {
                 actual = _driver.ExecuteScript("return JSON.stringify(JsInterop.anonymous)");
                 return actual != null && actual.ToString() != "null";
-            }, TimeSpan.FromSeconds(3));
+            }, TimeSpan.FromSeconds(10));
 
             Assert.Equal("{\"property\":\"Value\",\"field\":123,\"child\":{\"member\":\"2001-01-01T00:00:00\"}}", actual);
         }
@@ -53,7 +53,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             {
                 actual = _driver.ExecuteScript("return JSON.stringify(JsInterop.specified)");
                 return actual != null && actual.ToString() != "null";
-            }, TimeSpan.FromSeconds(5));
+            }, TimeSpan.FromSeconds(10));
 
             Assert.Equal("{\"member\":\"abc\"}", actual);
         }
@@ -69,7 +69,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             {
                 actual = _driver.ExecuteScript("return JsInterop.returnValue");
                 return actual != null && actual.ToString() != "null";
-            }, TimeSpan.FromSeconds(2));
+            }, TimeSpan.FromSeconds(10));
 
             Assert.Equal(2, (long)actual);
         }
@@ -85,7 +85,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             {
                 actual = _driver.ExecuteScript("return JsInterop.anotherReturnValue");
                 return actual != null && actual.ToString() != "null";
-            }, TimeSpan.FromSeconds(5));
+            }, TimeSpan.FromSeconds(10));
 
             Assert.Equal(2, (long)actual);
         }
