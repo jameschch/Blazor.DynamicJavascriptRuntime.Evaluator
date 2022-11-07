@@ -108,7 +108,7 @@ The execution of Javascript is performed with the eval() function, so it's imper
 First, install from nuget:
 
 ```
-Install-Package DynamicJavascriptRuntime.Blazor.Evaluator -Version 1.3.0.0
+Install-Package DynamicJavascriptRuntime.Blazor.Evaluator
 ```
 
 [https://www.nuget.org/packages/DynamicJavascriptRuntime.Blazor.Evaluator/](https://www.nuget.org/packages/DynamicJavascriptRuntime.Blazor.Evaluator/)
