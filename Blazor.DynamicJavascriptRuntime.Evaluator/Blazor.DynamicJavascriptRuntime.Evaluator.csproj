@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <Authors>jameschch</Authors>
     <Company></Company>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.4.0.0</Version>
+    <Version>1.5.0.0</Version>
     <PackageLicenseUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.png</PackageIconUrl>
@@ -15,8 +15,8 @@
     <PackageTags>blazor javascript dynamic JSRuntime JSInterop evaluator Blazor razor JS gasmask wasm webassembly</PackageTags>
     <Product>Blazor DynamicJavascriptRuntime Evaluator</Product>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <AssemblyVersion>1.4.0.0</AssemblyVersion>
-    <FileVersion>1.4.0.0</FileVersion>
+    <AssemblyVersion>1.5.0.0</AssemblyVersion>
+    <FileVersion>1.5.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.JSInterop" Version="6.0.9" />
+    <PackageReference Include="Microsoft.JSInterop" Version="8.0.24" />
   </ItemGroup>
 
 </Project>
