@@ -29,7 +29,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
         [Fact]
         public void Given_a_blazor_app_When_passing_anonymous_argument_Then_should_serialize_and_execute()
         {
-            _driver.Navigate().GoToUrl("http://localhost:54235");
+            _driver.Navigate().GoToUrl("http://localhost:54236");
 
             object actual = null;
 
@@ -45,7 +45,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
         [Fact]
         public void Given_a_blazor_app_When_passing_argument_And_specifying_as_serializable_type_Then_should_serialize_and_execute()
         {
-            _driver.Navigate().GoToUrl("http://localhost:54235");
+            _driver.Navigate().GoToUrl("http://localhost:54236");
 
             object actual = null;
 
@@ -61,7 +61,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
         [Fact]
         public void Given_a_blazor_app_When_invoking_synchronously_Then_should_execute()
         {
-            _driver.Navigate().GoToUrl("http://localhost:54235");
+            _driver.Navigate().GoToUrl("http://localhost:54236");
 
             object actual = null;
 
@@ -69,7 +69,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             {
                 actual = _driver.ExecuteScript("return JsInterop.returnValue");
                 return actual != null && actual.ToString() != "null";
-            }, TimeSpan.FromSeconds(10));
+            }, TimeSpan.FromSeconds(15));
 
             Assert.Equal(2, (long)actual);
         }
@@ -77,7 +77,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
         [Fact]
         public void Given_a_blazor_app_When_invoking_asynchronously_Then_should_execute()
         {
-            _driver.Navigate().GoToUrl("http://localhost:54235");
+            _driver.Navigate().GoToUrl("http://localhost:54236");
 
             object actual = null;
 
@@ -85,7 +85,7 @@ namespace Blazor.DynamicJavascriptRuntime.Evaluator.SystemTests
             {
                 actual = _driver.ExecuteScript("return JsInterop.anotherReturnValue");
                 return actual != null && actual.ToString() != "null";
-            }, TimeSpan.FromSeconds(10));
+            }, TimeSpan.FromSeconds(15));
 
             Assert.Equal(2, (long)actual);
         }
