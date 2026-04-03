@@ -1,0 +1,40 @@
+name: Publish NuGet
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore Blazor.DynamicJavascriptRuntime.Evaluator/Blazor.DynamicJavascriptRuntime.Evaluator.csproj
+
+      - name: Derive package version from tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: echo "PACKAGE_VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+
+      - name: Pack (tag-driven version)
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: dotnet pack Blazor.DynamicJavascriptRuntime.Evaluator/Blazor.DynamicJavascriptRuntime.Evaluator.csproj -c Release -o ./artifacts /p:ContinuousIntegrationBuild=true /p:PackageVersion=${{ env.PACKAGE_VERSION }}
+
+      - name: Pack (project version)
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        run: dotnet pack Blazor.DynamicJavascriptRuntime.Evaluator/Blazor.DynamicJavascriptRuntime.Evaluator.csproj -c Release -o ./artifacts /p:ContinuousIntegrationBuild=true
+
+      - name: Publish to NuGet
+        run: dotnet nuget push "./artifacts/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate

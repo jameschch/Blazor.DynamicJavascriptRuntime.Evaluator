@@ -7,14 +7,13 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.5.0.0</Version>
-    <PackageLicenseUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/jameschch/Blazor.DynamicJavascriptRuntime.Evaluator/master/Blazor.DynamicJavascriptRuntime.Evaluator/icon.png</PackageIconUrl>
     <PackageId>DynamicJavascriptRuntime.Blazor.Evaluator</PackageId>
     <Description>Execute dynamic object expressions as Javascript in Blazor WebAssembly</Description>
     <PackageTags>blazor javascript dynamic JSRuntime JSInterop evaluator Blazor razor JS gasmask wasm webassembly</PackageTags>
     <Product>Blazor DynamicJavascriptRuntime Evaluator</Product>
-    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <AssemblyVersion>1.5.0.0</AssemblyVersion>
     <FileVersion>1.5.0.0</FileVersion>
   </PropertyGroup>
